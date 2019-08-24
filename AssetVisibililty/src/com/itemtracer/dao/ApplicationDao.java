@@ -11,6 +11,8 @@ import java.util.List;
 
 import com.itemtracer.beans.AuthorityTypeBean;
 import com.itemtracer.beans.ItemMovementBean;
+import com.itemtracer.beans.PartBean;
+import com.itemtracer.beans.PartTypeBean;
 import com.itemtracer.beans.ProjectBean;
 import com.itemtracer.beans.ProjectUserSummaryBean;
 import com.itemtracer.beans.ItemMovementBean;
@@ -173,6 +175,38 @@ public class ApplicationDao {
 		
 		
 		return itemMovementBeans;
+	}
+	
+	
+	public ArrayList<PartTypeBean> getPartTypes(Connection connection){
+
+		ArrayList<PartTypeBean> partTypes = new ArrayList<>();
+		
+		try {
+	
+			 String sql = "SELECT * "+
+						 "FROM part_type "+
+						 "ORDER BY part_type ASC";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			//System.out.println(statement.toString());
+			ResultSet set = statement.executeQuery();
+			while (set.next()) {
+				PartTypeBean partType = new PartTypeBean();
+				partType.setPartTypeId(set.getInt("id"));
+				partType.setPartType(set.getString("part_type"));
+				partType.setTimeStamp(set.getDate("time_stamp"));
+				partType.setAuthorUserId(set.getInt("author_user_id"));
+				
+				partTypes.add(partType);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return partTypes;
 	}
 	
 	public List<ItemMovementBean> getMovementsFromLocation(String projectName,String location, Connection connection){
@@ -943,6 +977,214 @@ public List<String> getAuthorityTypes(Connection connection){
 		
 		
 	}
+	
+	public int addPart(PartBean part, Connection connection){
+		
+		int rowsAffected = 0;
+
+		
+		try {
+			
+			// write the insert query
+			String insertQuery = "INSERT INTO part (project_id, part_number, drawing_number, part_type_id, " +
+										"part_description, cage_code, manufacturer, author_user_id) " +
+										"VALUES(?,?,?,?,?,?,?,?)";
+
+			// set parameters with PreparedStatement
+			PreparedStatement statement = connection.prepareStatement(insertQuery);
+			statement.setInt(1, part.getProjectId());
+			statement.setString(2, part.getPartNumber());
+			statement.setString(3, part.getDrawingNumber());
+			statement.setInt(4, part.getPartTypeId());
+			statement.setString(5, part.getPartDescription());
+			statement.setString(6, part.getCageCode());
+			statement.setString(7, part.getManufacturer());
+			statement.setInt(8, part.getAuthorUserId());
+			
+			System.out.println(statement.toString());
+			// execute the statement
+			rowsAffected = statement.executeUpdate();
+			
+		} catch (SQLException exception) {
+			
+			exception.printStackTrace();
+			
+		}
+		return rowsAffected;
+		
+		
+	}
+	
+	public PartBean getPartBeanFromPartNumber(String partNumber, Connection connection){
+		
+		PartBean partBean = null;
+		
+		try {
+	
+			 String sql = "SELECT * "+
+						 "FROM part AS p "+ 
+						 "INNER JOIN project AS pro ON p.project_id = pro.id " +
+						 "INNER JOIN part_type AS pt ON p.part_type_id = pt.id " +
+						 "INNER JOIN user_info AS u ON p.author_user_id = u.id " +
+						 "WHERE p.part_number = ? ";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, partNumber);
+			System.out.println(statement.toString());
+			ResultSet set = statement.executeQuery();
+			
+			while (set.next()) {
+				partBean = new PartBean();
+				partBean.setPartId(set.getInt("p.id"));
+				partBean.setProjectId(set.getInt("p.project_id"));
+				partBean.setProjectName(set.getString("pro.project_name"));
+				partBean.setPartNumber(set.getString("p.part_number"));
+				partBean.setDrawingNumber(set.getString("p.drawing_number"));
+				partBean.setPartTypeId(set.getInt("p.part_type_id"));
+				partBean.setPartTypeName(set.getString("pt.part_type"));
+				partBean.setPartDescription(set.getString("p.part_description"));
+				partBean.setCageCode(set.getString("p.cage_code"));
+				partBean.setManufacturer(set.getString("p.manufacturer"));
+				partBean.setTimeStamp(set.getDate("p.time_stamp"));
+				partBean.setAuthorUserId(set.getInt("p.author_user_id"));
+				partBean.setAuthorUserName(set.getString("u.user_name"));
+			}
+				
+		
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		return partBean;
+		
+	}
+	
+public ArrayList<PartBean> getParts(ProjectBean project, Connection connection){
+		
+		PartBean partBean = null;
+		ArrayList<PartBean> partBeans = new ArrayList<>();
+		
+		try {
+	
+			 String sql = "SELECT * "+
+						 "FROM part AS p "+ 
+						 "INNER JOIN project AS pro ON p.project_id = pro.id " +
+						 "INNER JOIN part_type AS pt ON p.part_type_id = pt.id " +
+						 "INNER JOIN user_info AS u ON p.author_user_id = u.id " +
+						 "WHERE p.project_id = ? ";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, project.getProjectId());
+			System.out.println(statement.toString());
+			ResultSet set = statement.executeQuery();
+			
+			while (set.next()) {
+				partBean = new PartBean();
+				partBean.setPartId(set.getInt("p.id"));
+				partBean.setProjectId(set.getInt("p.project_id"));
+				partBean.setProjectName(set.getString("pro.project_name"));
+				partBean.setPartNumber(set.getString("p.part_number"));
+				partBean.setDrawingNumber(set.getString("p.drawing_number"));
+				partBean.setPartTypeId(set.getInt("p.part_type_id"));
+				partBean.setPartTypeName(set.getString("pt.part_type"));
+				partBean.setPartDescription(set.getString("p.part_description"));
+				partBean.setCageCode(set.getString("p.cage_code"));
+				partBean.setManufacturer(set.getString("p.manufacturer"));
+				partBean.setTimeStamp(set.getDate("p.time_stamp"));
+				partBean.setAuthorUserId(set.getInt("p.author_user_id"));
+				partBean.setAuthorUserName(set.getString("u.user_name"));
+				partBeans.add(partBean);
+			}
+				
+		
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		return partBeans;
+		
+	}
+
+public int updatePart(PartBean part, Connection connection){
+	
+	int rowsAffected = 0;
+
+	
+	try {
+		
+		// write the insert query
+		String insertQuery = "UPDATE part " + 
+							 "SET " + 
+							 "project_id = ? , " +
+							 "drawing_number = ? , " +
+							 "part_type_id = ?, " +
+							 "part_description = ?, " + 
+							 "cage_code = ?, " + 
+							 "manufacturer = ?, " + 
+							 "author_user_id = ? " +
+							 "WHERE part_number = ?";
+
+		// set parameters with PreparedStatement
+		PreparedStatement statement = connection.prepareStatement(insertQuery);
+		statement.setInt(1, part.getProjectId());
+		statement.setString(2, part.getDrawingNumber());
+		statement.setInt(3, part.getPartTypeId());
+		statement.setString(4, part.getPartDescription());
+		statement.setString(5, part.getCageCode());
+		statement.setString(6, part.getManufacturer());
+		statement.setInt(7, part.getAuthorUserId());
+		statement.setString(8, part.getPartNumber());
+		
+		System.out.println(statement.toString());
+		// execute the statement
+		rowsAffected = statement.executeUpdate();
+		
+	} catch (SQLException exception) {
+		
+		exception.printStackTrace();
+		
+	}
+	return rowsAffected;
+	
+	
+}
+
+public int deletePart(PartBean part, Connection connection){
+	
+	int rowsAffected = 0;
+
+	
+	try {
+		
+		// write the insert query
+		String insertQuery = "DELETE FROM part " + 
+							 "WHERE project_id = ? " +
+							 "AND part_number = ?";
+
+		// set parameters with PreparedStatement
+		PreparedStatement statement = connection.prepareStatement(insertQuery);
+		statement.setInt(1, part.getProjectId());
+		statement.setString(2, part.getPartNumber());
+		
+		System.out.println(statement.toString());
+		// execute the statement
+		rowsAffected = statement.executeUpdate();
+		
+	} catch (SQLException exception) {
+		
+		exception.printStackTrace();
+		
+	}
+	return rowsAffected;
+	
+	
+}
 	
 }
 

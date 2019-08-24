@@ -48,8 +48,8 @@
 		
         <form action="login" method="post">
         	
-			<label>Username</label> <input type="text" name="username" id="username"><br/>
-			<label>Password</label> <input type="password" name="password" id="password"><br/>
+			<label>Username</label> <input type="text" name="username" id="username" value="admin"><br/>
+			<label>Password</label> <input type="password" name="password" id="password" value="admin"><br/>
 			<input type="submit" value="Submit" id="submit">
 		</form>
         <p>Log in to Item Tracer.<br /></p>

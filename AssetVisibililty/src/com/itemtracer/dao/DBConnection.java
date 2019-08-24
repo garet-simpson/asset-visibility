@@ -20,7 +20,7 @@ public class DBConnection {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/itemtracer", "root", "iamgroot");
 			//connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/assetvisibility", "root", "iamgroot"); 
 			//Production mysql connection
-			//connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/itemtrac_assetvisibility", "itemtrac_admin", "pass");
+			//connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/itemtrac_itemtracer2", "itemtrac_root", "iamgroot");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Where is your MySQL JDBC Driver?");
 			e.printStackTrace();

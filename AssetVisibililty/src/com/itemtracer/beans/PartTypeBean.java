@@ -4,16 +4,18 @@ import java.util.Date;
 
 public class PartTypeBean {
 
+	private int partTypeId;
 	private String partType;
 	private Date timeStamp;
-	private String authorUser;
+	private int authorUserId;
 	
 	
-	public PartTypeBean(String partType, Date timeStamp, String authorUser) {
-
+	public PartTypeBean(int partTypeId, String partType, Date timeStamp, int authorUserId) {
+		
+		this.partTypeId = partTypeId;
 		this.partType = partType;
 		this.timeStamp = timeStamp;
-		this.authorUser = authorUser;
+		this.authorUserId = authorUserId;
 	}
 	
 	
@@ -42,13 +44,23 @@ public class PartTypeBean {
 	}
 
 
-	public String getAuthorUser() {
-		return authorUser;
+	public int getAuthorUserId() {
+		return authorUserId;
 	}
 
 
-	public void setAuthorUser(String authorUser) {
-		this.authorUser = authorUser;
+	public void setAuthorUserId(int authorUserId) {
+		this.authorUserId = authorUserId;
+	}
+
+
+	public int getPartTypeId() {
+		return partTypeId;
+	}
+
+
+	public void setPartTypeId(int partTypeId) {
+		this.partTypeId = partTypeId;
 	}
 
 

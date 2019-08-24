@@ -25,6 +25,11 @@
 			<a href="newProject">create new project</a> 
 			<a href="addUserToProject">manage project users</a>
         	</div></div></li>  
+        <li><div class="dropdown"><a href="parts">parts</a>
+        	<div class="dropdown-content">
+			<a href="newPart">add new part</a>
+			<a href="updatePart">update part</a> 
+        	</div></div></li>  
         <li><a href="#mission">move items</a></li>
         <li><div class="dropdown"><a href="reports">reports</a>
         	<div class="dropdown-content">

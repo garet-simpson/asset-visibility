@@ -27,20 +27,25 @@
           		</ul>
 		</div>
 		<div class="module">
-      		<h3 class="headline">Parts and Assemblies</h3>
+      		<h3 class="headline">Parts</h3>
 			<p>Add new parts and assemblies</p>
           		<ul>
-          			<li>Add New Parts (In Work)</li> 
+          			<li><a href="newPart">Add New Part</a></li> 
+          			<li><a href="updatePart">Update Part</a></li>  
 					<li>Add Parts to Stock Location (In Work)</li> 
 					<li>Add New Assembly (In Work)</li> 
 					<li>Assign Parts to Assembly (In Work)</li> 
           		</ul>
 		</div>
 		<div class="module">
-      		<h3 class="headline">Locations</h3>
-			<p>Add new Locations.</p>
+      		<h3 class="headline">Assemblies</h3>
+			<p>Add new parts and assemblies</p>
           		<ul>
-          			<li>Create new Location (In Work)</li> 
+          			<li><a href="">Add New Assembly (In Work)</a></li> 
+          			<li><a href="">Update Assembly (In Work)</a></li> 
+					<li>Add Parts to Stock Location (In Work)</li> 
+					<li>Add New Assembly (In Work)</li> 
+					<li>Assign Parts to Assembly (In Work)</li> 
           		</ul>
 		</div>
 		</div>
@@ -48,6 +53,7 @@
       		<h3 class="headline">Move Items</h3>
 			<p>Move Part or Assembly to New Location</p>
           		<ul>
+          			<li>Create new Location (In Work)</li>
           			<li>Assign Parts to Build (In Work)</li> 
           			<li>Change Part Location (In Work)</li> 
           		</ul>

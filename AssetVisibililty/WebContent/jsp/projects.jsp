@@ -13,7 +13,7 @@
 <section id="mission" class="section">
   <div class="container">
     <div class="text-content">
-      <h2 class="headline">reports</h2>
+      <h2 class="headline">Projects</h2>
       <p>Welcome to Item Tracer Total Asset Visibility</p>
 		<p>Projects:</p>
       	<ol>
