@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.itemtracer.beans.UserBean;
 import com.itemtracer.dao.ApplicationDao;
+import com.itemtracer.dao.DBConnection;
 
 @WebServlet("/registerUser")
 public class RegisterUserServlet extends HttpServlet {
@@ -23,8 +24,14 @@ public class RegisterUserServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		Connection connection = (Connection)getServletContext().getAttribute("dbconnection");
+		if(connection == null) {
+			connection = DBConnection.getConnectionToDatabase();
+			req.getServletContext().setAttribute("dbconnection", connection);
+		}
+		
+		
 		// collect all form data
-		String projectName = "Demo";
 		String userName = req.getParameter("userName");
 		String password = req.getParameter("password");
 		String firstName = req.getParameter("firstName");
@@ -50,7 +57,7 @@ public class RegisterUserServlet extends HttpServlet {
 		if(infoMessage == null) {
 		// call DAO layer and save the user object to DB
 			ApplicationDao dao = new ApplicationDao();
-			Connection connection = (Connection)getServletContext().getAttribute("dbconnection");
+			connection = (Connection)getServletContext().getAttribute("dbconnection");
 			int rows = dao.registerUser(user, connection);
 		
 			// prepare an information message for user about the success or failure of the operation

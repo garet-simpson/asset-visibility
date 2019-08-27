@@ -2,6 +2,7 @@ package com.itemtracer.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,10 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
 import com.itemtracer.beans.UserBean;
 import com.itemtracer.beans.ProjectBean;
 import com.itemtracer.dao.ApplicationDao;
+import com.itemtracer.dao.DBConnection;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet{
@@ -21,6 +24,17 @@ public class LoginServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		DataSource dataSource = (DataSource)getServletContext().getAttribute("dataSource");
+		Connection connection = null;
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+
+		
 		String projectName = "Demo";
 		
 		//get the username from the login form
@@ -29,7 +43,7 @@ public class LoginServlet extends HttpServlet{
 		
 		//call DAO for validation logic
 		ApplicationDao dao= new ApplicationDao();
-		Connection connection = (Connection)getServletContext().getAttribute("dbconnection");
+		connection = (Connection)getServletContext().getAttribute("dbconnection");
 		UserBean user = dao.validateUser(username, password, connection);
 		
 		//check if user is invalid and set up an error message

@@ -4,55 +4,95 @@ import java.util.Date;
 
 public class AssemblyBean {
 	
-	private String projectId;
-	private String parentPartId;
-	private String childPartId;
+	private int projectId;
+	private String projectName;
+	private int parentPartId;
+	private String parentPartNumber;
+	private int childPartId;
+	private String childPartNumber;
 	private String revision;
 	private String itemNumber;
 	private String referenceDesignator;
-	private String alternateCodeId;
+	private int alternateCodeId;
+	private String alternateCode;
 	private String quantity;
-	private String timeStamp;
-	private String authorUser;
+	private Date timeStamp;
+	private int authorUserId;
+	private String authorUserName;
 	
-	public AssemblyBean(String projectId,String parentPartId, String childPartId, String revision,
-			String itemNumber,String referenceDesignator,String alternateCodeId,String quantity,String timeStamp,String authorUser) {
-		
-		this.projectId=projectId;
-		this.parentPartId=parentPartId;
-		this.childPartId=childPartId;
-		this.revision=revision;
-		this.itemNumber=itemNumber;
-		this.referenceDesignator=referenceDesignator;
-		this.alternateCodeId=alternateCodeId;
-		this.quantity=quantity;
-		this.timeStamp=timeStamp;
-		this.authorUser=authorUser;
+	
+	public AssemblyBean(int projectId, String projectName, int parentPartId, String parentPartNumber, int childPartId,
+			String childPartNumber, String revision, String itemNumber, String referenceDesignator, int alternateCodeId,
+			String alternateCode, String quantity, Date timeStamp, int authorUserId, String authorUserName) {
+
+		this.projectId = projectId;
+		this.projectName = projectName;
+		this.parentPartId = parentPartId;
+		this.parentPartNumber = parentPartNumber;
+		this.childPartId = childPartId;
+		this.childPartNumber = childPartNumber;
+		this.revision = revision;
+		this.itemNumber = itemNumber;
+		this.referenceDesignator = referenceDesignator;
+		this.alternateCodeId = alternateCodeId;
+		this.alternateCode = alternateCode;
+		this.quantity = quantity;
+		this.timeStamp = timeStamp;
+		this.authorUserId = authorUserId;
+		this.authorUserName = authorUserName;
+
+	}
+	
+	public AssemblyBean() {
 		
 	}
 
-	public String getProjectId() {
+	public int getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(String projectId) {
+	public void setProjectId(int projectId) {
 		this.projectId = projectId;
 	}
 
-	public String getParentPartId() {
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public int getParentPartId() {
 		return parentPartId;
 	}
 
-	public void setParentPartId(String parentPartId) {
+	public void setParentPartId(int parentPartId) {
 		this.parentPartId = parentPartId;
 	}
 
-	public String getChildPartId() {
+	public String getParentPartNumber() {
+		return parentPartNumber;
+	}
+
+	public void setParentPartNumber(String parentPartNumber) {
+		this.parentPartNumber = parentPartNumber;
+	}
+
+	public int getChildPartId() {
 		return childPartId;
 	}
 
-	public void setChildPartId(String childPartId) {
+	public void setChildPartId(int childPartId) {
 		this.childPartId = childPartId;
+	}
+
+	public String getChildPartNumber() {
+		return childPartNumber;
+	}
+
+	public void setChildPartNumber(String childPartNumber) {
+		this.childPartNumber = childPartNumber;
 	}
 
 	public String getRevision() {
@@ -79,12 +119,20 @@ public class AssemblyBean {
 		this.referenceDesignator = referenceDesignator;
 	}
 
-	public String getAlternateCodeId() {
+	public int getAlternateCodeId() {
 		return alternateCodeId;
 	}
 
-	public void setAlternateCodeId(String alternateCodeId) {
+	public void setAlternateCodeId(int alternateCodeId) {
 		this.alternateCodeId = alternateCodeId;
+	}
+
+	public String getAlternateCode() {
+		return alternateCode;
+	}
+
+	public void setAlternateCode(String alternateCode) {
+		this.alternateCode = alternateCode;
 	}
 
 	public String getQuantity() {
@@ -95,23 +143,30 @@ public class AssemblyBean {
 		this.quantity = quantity;
 	}
 
-	public String getTimeStamp() {
+	public Date getTimeStamp() {
 		return timeStamp;
 	}
 
-	public void setTimeStamp(String timeStamp) {
+	public void setTimeStamp(Date timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 
-	public String getAuthorUser() {
-		return authorUser;
+	public int getAuthorUserId() {
+		return authorUserId;
 	}
 
-	public void setAuthorUser(String authorUser) {
-		this.authorUser = authorUser;
+	public void setAuthorUserId(int authorUserId) {
+		this.authorUserId = authorUserId;
+	}
+
+	public String getAuthorUserName() {
+		return authorUserName;
+	}
+
+	public void setAuthorUserName(String authorUserName) {
+		this.authorUserName = authorUserName;
 	}
 	
-	
-	
+
 
 }

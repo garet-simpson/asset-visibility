@@ -3,14 +3,17 @@ package com.itemtracer.beans;
 import java.util.Date;
 
 public class AlternateCodeBean {
+	private int alternateCodeId;
 	private String alternateCode;
 	private Date timeStamp;
-	private String authorUser;
+	private int authorUserId;
+	private String authorUserName;
 	
-	public AlternateCodeBean(String alternateCode, Date timeStamp, String authorUser) {
+	public AlternateCodeBean(int alternateCodeId, String alternateCode, Date timeStamp, int authorUserId, String authorUserName) {
+		this.alternateCodeId=alternateCodeId;
 		this.alternateCode=alternateCode;
 		this.timeStamp=timeStamp;
-		this.authorUser=authorUser;
+		this.authorUserId=authorUserId;
 	}
 
 	public AlternateCodeBean() {
@@ -33,12 +36,28 @@ public class AlternateCodeBean {
 		this.timeStamp = timeStamp;
 	}
 
-	public String getAuthorUser() {
-		return authorUser;
+	public int getAuthorUserId() {
+		return authorUserId;
 	}
 
-	public void setAuthorUser(String authorUser) {
-		this.authorUser = authorUser;
+	public void setAuthorUserId(int authorUserId) {
+		this.authorUserId = authorUserId;
+	}
+
+	public int getAlternateCodeId() {
+		return alternateCodeId;
+	}
+
+	public void setAlternateCodeId(int alternateCodeId) {
+		this.alternateCodeId = alternateCodeId;
+	}
+
+	public String getAuthorUserName() {
+		return authorUserName;
+	}
+
+	public void setAuthorUserName(String authorUserName) {
+		this.authorUserName = authorUserName;
 	}
 	
 	

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.itemtracer.beans.AlternateCodeBean;
 import com.itemtracer.beans.AuthorityTypeBean;
 import com.itemtracer.beans.ItemMovementBean;
 import com.itemtracer.beans.PartBean;
@@ -207,6 +208,36 @@ public class ApplicationDao {
 		
 		
 		return partTypes;
+	}
+	
+	public ArrayList<AlternateCodeBean> getAlternateCodes(Connection connection){
+
+		ArrayList<AlternateCodeBean> alternateCodes = new ArrayList<>();
+		
+		try {
+	
+			 String sql = "SELECT * "+
+						 "FROM alternate_code ";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			//System.out.println(statement.toString());
+			ResultSet set = statement.executeQuery();
+			while (set.next()) {
+				AlternateCodeBean alternateCode = new AlternateCodeBean();
+				alternateCode.setAlternateCodeId(set.getInt("id"));
+				alternateCode.setAlternateCode(set.getString("alternate_code"));
+				alternateCode.setTimeStamp(set.getDate("time_stamp"));
+				alternateCode.setAuthorUserId(set.getInt("author_user_id"));
+				
+				alternateCodes.add(alternateCode);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return alternateCodes;
 	}
 	
 	public List<ItemMovementBean> getMovementsFromLocation(String projectName,String location, Connection connection){
