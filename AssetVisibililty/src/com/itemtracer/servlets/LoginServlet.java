@@ -18,21 +18,21 @@ import com.itemtracer.beans.ProjectBean;
 import com.itemtracer.dao.ApplicationDao;
 import com.itemtracer.dao.DBConnection;
 
+import javax.annotation.Resource;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet{
+	//https://www.codejava.net/servers/tomcat/configuring-jndi-datasource-for-database-connection-pooling-in-tomcat
+	
 	
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		DataSource dataSource = (DataSource)getServletContext().getAttribute("dataSource");
-		Connection connection = null;
-		try {
-			connection = dataSource.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+
+		HttpSession session = req.getSession();
+		Connection connection = (Connection)getServletContext().getAttribute("dbconnection");
 
 		
 		String projectName = "Demo";
@@ -43,7 +43,8 @@ public class LoginServlet extends HttpServlet{
 		
 		//call DAO for validation logic
 		ApplicationDao dao= new ApplicationDao();
-		connection = (Connection)getServletContext().getAttribute("dbconnection");
+		
+		
 		UserBean user = dao.validateUser(username, password, connection);
 		
 		//check if user is invalid and set up an error message
@@ -54,8 +55,6 @@ public class LoginServlet extends HttpServlet{
 			ProjectBean project = dao.getProjectBean(projectName,connection);
 			
 			
-			
-			HttpSession session = req.getSession();
 			
 			//set the username as an attribute
 			session.setAttribute("user", user);
@@ -69,10 +68,11 @@ public class LoginServlet extends HttpServlet{
 			req.setAttribute("loginError", errorMessage);
 			req.getRequestDispatcher("/jsp/index.jsp").forward(req, resp);
 			
-			
 		}
 		
 			
+		
+		
 		
 	}
 

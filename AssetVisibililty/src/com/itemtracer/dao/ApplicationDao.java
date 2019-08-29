@@ -68,6 +68,7 @@ public class ApplicationDao {
 			
 			//System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 			while (set.next()) {
 				itemMovementBean = new ItemMovementBean();
 				itemMovementBean.setPartDescription(set.getString("partDescription"));
@@ -79,7 +80,7 @@ public class ApplicationDao {
 			e.printStackTrace();
 		}
 		
-		
+
 		return itemMovementBeans;
 	}
 
@@ -101,6 +102,7 @@ public class ApplicationDao {
 			
 			//System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 			while (set.next()) {
 				itemMovementBean = new ItemMovementBean();
 				itemMovementBean.setSerialNumber(set.getString("serialNumber"));
@@ -134,6 +136,7 @@ public class ApplicationDao {
 			
 			//System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 
 			itemMovementBeans = loadItemMovementBean(set);
 			
@@ -163,6 +166,7 @@ public class ApplicationDao {
 			statement.setString(1, projectName);
 			//System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 			while (set.next()) {
 				itemMovementBean = new ItemMovementBean();
 				itemMovementBean.setDestinationLocationName(set.getString("destinationLocationName"));
@@ -192,6 +196,7 @@ public class ApplicationDao {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			//System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 			while (set.next()) {
 				PartTypeBean partType = new PartTypeBean();
 				partType.setPartTypeId(set.getInt("id"));
@@ -222,6 +227,7 @@ public class ApplicationDao {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			//System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 			while (set.next()) {
 				AlternateCodeBean alternateCode = new AlternateCodeBean();
 				alternateCode.setAlternateCodeId(set.getInt("id"));
@@ -259,6 +265,7 @@ public class ApplicationDao {
 			
 			//System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 
 			itemMovementBeans = loadItemMovementBean(set);
 			
@@ -292,6 +299,7 @@ public List<ItemMovementBean> getMovementFromPartDescriptionAndLocation(String p
 			
 			//System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 
 			itemMovementBeans = loadItemMovementBean(set);
 			
@@ -323,6 +331,7 @@ public HashMap <String,Integer> getQuantityByPartDescription(String projectName,
 	
 		//System.out.println(statement.toString());
 		ResultSet set = statement.executeQuery();
+		
 
 		while (set.next()) {
 			partDescriptionCounter.put(set.getString("partDescription"), set.getInt("totalQuantity"));
@@ -356,6 +365,7 @@ public HashMap <ItemMovementBean,Integer> getQuantityByPartNumber(String project
 	
 		//System.out.println(statement.toString());
 		ResultSet set = statement.executeQuery();
+		
 
 		while (set.next()) {
 			itemMovementBean = new ItemMovementBean();
@@ -417,6 +427,7 @@ public HashMap <ItemMovementBean,Integer> getQuantityByPartNumber(String project
 			statement.setInt(4, user.getAuthorUserId());
 			
 			rowsAffected = statement.executeUpdate();
+			
 			//System.out.println(statement.toString());
 			connection.commit();
 			connection.setAutoCommit(true);
@@ -449,6 +460,7 @@ public HashMap <ItemMovementBean,Integer> getQuantityByPartNumber(String project
 			// execute the statement and check whether user exists
 
 			ResultSet set = statement.executeQuery();
+
 			while (set.next()) {
 				user = new UserBean();
 				user.setUserId(set.getInt("id"));
@@ -473,6 +485,7 @@ public HashMap <ItemMovementBean,Integer> getQuantityByPartNumber(String project
 			String sql = "SELECT * FROM user_info WHERE user_name=?";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, username);
+			
 
 			// execute query, get resultset and return User info
 			ResultSet set = statement.executeQuery();
@@ -505,6 +518,7 @@ public HashMap <ItemMovementBean,Integer> getQuantityByPartNumber(String project
 
 			// execute query, get resultset and return User info
 			ResultSet set = statement.executeQuery();
+			
 			while (set.next()) {
 				user = new UserBean();
 				user.setUserId(set.getInt("id"));
@@ -538,6 +552,7 @@ public HashMap <ItemMovementBean,Integer> getQuantityByPartNumber(String project
 			//System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
 			
+			
 			while (set.next()) {
 				
 				projectNames.add(set.getString("project_name"));
@@ -568,6 +583,7 @@ public HashMap <ItemMovementBean,Integer> getQuantityByPartNumber(String project
 			statement.setString(2, userName);
 			//System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 			
 			while (set.next()) {
 				
@@ -600,6 +616,7 @@ public HashMap <ItemMovementBean,Integer> getQuantityByPartNumber(String project
 			//System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
 			
+			
 			while (set.next()) {
 				
 				projectNames.add(set.getString("projectName"));
@@ -629,6 +646,7 @@ public HashMap <ItemMovementBean,Integer> getQuantityByPartNumber(String project
 			statement.setString(1, projectName);
 			System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 			
 			while (set.next()) {
 				projectUserSummaryBean = new ProjectUserSummaryBean();
@@ -672,6 +690,7 @@ public ProjectUserSummaryBean getProjectUserSummaryBeanForUserProject(String pro
 			System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
 			
+			
 			while (set.next()) {
 				projectUserSummaryBean = new ProjectUserSummaryBean();
 				projectUserSummaryBean.setUserName(set.getString("userName"));
@@ -713,6 +732,7 @@ public String getUserProjectAuthority(String projectName, String userName, Conne
 			System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
 			
+			
 			while (set.next()) {
 				userProjectAuthority = set.getString("projectAuthority");
 			}
@@ -744,6 +764,7 @@ public AuthorityTypeBean getAuthorityTypeBean(String userProjectAuthority, Conne
 
 		System.out.println(statement.toString());
 		ResultSet set = statement.executeQuery();
+		
 		
 		while (set.next()) {
 			authorityTypeBean.setAuthorityTypeId(set.getInt("id"));
@@ -784,6 +805,7 @@ public int updateUserProjectAuthority(int projectId, int userId,  int projectAut
 		System.out.println(statement.toString());
 		rowsAffected = statement.executeUpdate();
 		
+		
 
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
@@ -814,6 +836,7 @@ public int addUserProjectAuthority(int projectId, int userId,  int projectAuthor
 		System.out.println(statement.toString());
 		rowsAffected = statement.executeUpdate();
 		
+		
 
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
@@ -842,6 +865,7 @@ public int removeUserProjectAuthority(int projectId, int userId, Connection conn
 		System.out.println(statement.toString());
 		rowsAffected = statement.executeUpdate();
 		
+		
 
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
@@ -866,6 +890,7 @@ public List<String> getAuthorityTypes(Connection connection){
 		PreparedStatement statement = connection.prepareStatement(sql);
 		System.out.println(statement.toString());
 		ResultSet set = statement.executeQuery();
+		
 		
 		while (set.next()) {
 			authorityTypes.add(set.getString("authority_type"));
@@ -898,6 +923,7 @@ public List<String> getAuthorityTypes(Connection connection){
 			statement.setString(1, projectName);
 			System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 			
 			while (set.next()) {
 				projectBean = new ProjectBean();
@@ -986,6 +1012,7 @@ public List<String> getAuthorityTypes(Connection connection){
 				//System.out.println(statement.toString());
 				// execute the statement
 				rowsAffected = statement.executeUpdate();
+				
 			
 			}
 						
@@ -1036,6 +1063,7 @@ public List<String> getAuthorityTypes(Connection connection){
 			// execute the statement
 			rowsAffected = statement.executeUpdate();
 			
+			
 		} catch (SQLException exception) {
 			
 			exception.printStackTrace();
@@ -1063,6 +1091,7 @@ public List<String> getAuthorityTypes(Connection connection){
 			statement.setString(1, partNumber);
 			System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 			
 			while (set.next()) {
 				partBean = new PartBean();
@@ -1111,6 +1140,7 @@ public ArrayList<PartBean> getParts(ProjectBean project, Connection connection){
 			statement.setInt(1, project.getProjectId());
 			System.out.println(statement.toString());
 			ResultSet set = statement.executeQuery();
+			
 			
 			while (set.next()) {
 				partBean = new PartBean();
@@ -1176,6 +1206,7 @@ public int updatePart(PartBean part, Connection connection){
 		// execute the statement
 		rowsAffected = statement.executeUpdate();
 		
+		
 	} catch (SQLException exception) {
 		
 		exception.printStackTrace();
@@ -1206,6 +1237,7 @@ public int deletePart(PartBean part, Connection connection){
 		System.out.println(statement.toString());
 		// execute the statement
 		rowsAffected = statement.executeUpdate();
+		
 		
 	} catch (SQLException exception) {
 		

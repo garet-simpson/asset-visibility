@@ -26,8 +26,8 @@ public class RegisterUserServlet extends HttpServlet {
 
 		Connection connection = (Connection)getServletContext().getAttribute("dbconnection");
 		if(connection == null) {
-			connection = DBConnection.getConnectionToDatabase();
-			req.getServletContext().setAttribute("dbconnection", connection);
+			//connection = DBConnection.getConnectionToDatabase();
+			//req.getServletContext().setAttribute("dbconnection", connection);
 		}
 		
 		
