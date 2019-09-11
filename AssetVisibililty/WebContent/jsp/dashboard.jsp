@@ -41,7 +41,7 @@
       		<h3 class="headline">Assemblies</h3>
 			<p>Add new parts and assemblies</p>
           		<ul>
-          			<li><a href="">Add New Assembly (In Work)</a></li> 
+          			<li><a href="newAssembly">Add New Assembly (In Work)</a></li> 
           			<li><a href="">Update Assembly (In Work)</a></li> 
 					<li>Add Parts to Stock Location (In Work)</li> 
 					<li>Add New Assembly (In Work)</li> 

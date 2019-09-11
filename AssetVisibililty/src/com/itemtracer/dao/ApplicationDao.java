@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.itemtracer.beans.AlternateCodeBean;
+import com.itemtracer.beans.AssemblyBean;
 import com.itemtracer.beans.AuthorityTypeBean;
 import com.itemtracer.beans.ItemMovementBean;
 import com.itemtracer.beans.PartBean;
@@ -245,6 +246,38 @@ public class ApplicationDao {
 		
 		return alternateCodes;
 	}
+	
+	public AlternateCodeBean getAlternateCodeBean(String alternateCode, Connection connection){
+
+		AlternateCodeBean alternateCodeBean = new AlternateCodeBean();
+		
+		try {
+	
+			 String sql = "SELECT * "+
+						 "FROM alternate_code " +
+						 "WHERE alternate_code = ?";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, alternateCode);
+			//System.out.println(statement.toString());
+			ResultSet set = statement.executeQuery();
+			
+			while (set.next()) {
+				alternateCodeBean.setAlternateCodeId(set.getInt("id"));
+				alternateCodeBean.setAlternateCode(set.getString("alternate_code"));
+				alternateCodeBean.setTimeStamp(set.getDate("time_stamp"));
+				alternateCodeBean.setAuthorUserId(set.getInt("author_user_id"));
+	
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return alternateCodeBean;
+	}
+	
 	
 	public List<ItemMovementBean> getMovementsFromLocation(String projectName,String location, Connection connection){
 		
@@ -1245,6 +1278,106 @@ public int deletePart(PartBean part, Connection connection){
 		
 	}
 	return rowsAffected;
+	
+	
+}
+
+
+public int addAssembly(AssemblyBean assembly, Connection connection){
+	
+	int rowsAffected = 0;
+
+	
+	try {
+		
+		// write the insert query
+		String insertQuery = "INSERT INTO assembly (project_id, parent_part_id, child_part_id, revision, " +
+							 "item_number, reference_designator, alternate_code_id, quantity, author_user_id) " +
+									"VALUES(?,?,?,?,?,?,?,?,?)";
+
+		// set parameters with PreparedStatement
+		PreparedStatement statement = connection.prepareStatement(insertQuery);
+		statement.setInt(1, assembly.getProjectId());
+		statement.setInt(2, assembly.getParentPartId());
+		statement.setInt(3, assembly.getChildPartId());
+		statement.setString(4, assembly.getRevision());
+		statement.setString(5, assembly.getItemNumber());
+		statement.setString(6, assembly.getReferenceDesignator());
+		statement.setInt(7, assembly.getAlternateCodeId());
+		statement.setString(8, assembly.getQuantity());
+		statement.setInt(9, assembly.getAuthorUserId());
+		
+		System.out.println(statement.toString());
+		// execute the statement
+		rowsAffected = statement.executeUpdate();
+		
+		
+	} catch (SQLException exception) {
+		
+		exception.printStackTrace();
+		
+	}
+	return rowsAffected;
+	
+	
+}
+
+public AssemblyBean getAssemblyBean(AssemblyBean assembly, Connection connection){
+	
+	AssemblyBean assemblyBean = new AssemblyBean();
+
+	
+	try {
+		
+		// write the insert query
+		String insertQuery = "SELECT * " + 
+							 "FROM assembly AS a " + 
+							 "INNER JOIN project AS pro ON a.project_id = pro.id " +
+							 "INNER JOIN part AS pp ON a.parent_part_id = pp.id " +
+							 "INNER JOIN part AS cp ON a.child_part_id = cp.id " +
+							 "INNER JOIN alternate_code AS alt ON a.alternate_code_id = alt.id " +
+							 "INNER JOIN user_info AS u ON a.author_user_id = u.id " +
+							 "WHERE a.parent_part_id = ? " +
+							 "AND a.child_part_id = ? " +
+							 "AND a.revision = ? " +
+							 "AND a.item_number = ?";
+
+		// set parameters with PreparedStatement
+		PreparedStatement statement = connection.prepareStatement(insertQuery);
+		statement.setInt(1, assembly.getParentPartId());
+		statement.setInt(2, assembly.getChildPartId());
+		statement.setString(3, assembly.getRevision());
+		statement.setString(4, assembly.getItemNumber());
+
+		System.out.println(statement.toString());
+		// execute the statement
+		ResultSet set = statement.executeQuery();
+		
+		while (set.next()) {
+			assemblyBean.setAssemblyId(set.getInt("a.id"));
+			assemblyBean.setProjectId(set.getInt("a.project_id"));
+			assemblyBean.setProjectName(set.getString("pro.project_name"));
+			assemblyBean.setParentPartId(set.getInt("a.parent_part_id"));
+			assemblyBean.setParentPartNumber(set.getString("pp.part_number"));
+			assemblyBean.setChildPartId(set.getInt("a.child_part_id"));
+			assemblyBean.setChildPartNumber(set.getString("cp.part_number"));
+			assemblyBean.setRevision(set.getString("a.revision"));
+			assemblyBean.setItemNumber(set.getString("a.item_number"));
+			assemblyBean.setReferenceDesignator(set.getString("a.reference_designator"));
+			assemblyBean.setAlternateCodeId(set.getInt("a.alternate_code_id"));
+			assemblyBean.setAlternateCode(set.getString("alt.alternate_code"));
+			assemblyBean.setQuantity(set.getString("a.quantity"));
+			assemblyBean.setTimeStamp(set.getDate("a.time_stamp"));
+			assemblyBean.setAuthorUserId(set.getInt("a.author_user_id"));
+			assemblyBean.setAuthorUserName(set.getString("u.user_name"));
+		}
+		
+	} catch (SQLException exception) {
+		
+		exception.printStackTrace();
+		
+	}
+	return assemblyBean;
 	
 	
 }

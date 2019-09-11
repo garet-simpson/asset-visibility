@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.itemtracer.beans.AlternateCodeBean;
+import com.itemtracer.beans.AssemblyBean;
 import com.itemtracer.beans.PartBean;
 import com.itemtracer.beans.PartTypeBean;
 import com.itemtracer.beans.ProjectBean;
@@ -75,58 +76,28 @@ public class NewAssemblyServlet extends HttpServlet {
 		String itemNumber = req.getParameter("itemNumber");
 		String referenceDesignator = req.getParameter("referenceDesignator");
 		String alternateCode = req.getParameter("alternateCode");
+		AlternateCodeBean alternateCodeBean = dao.getAlternateCodeBean(alternateCode,connection);
+		req.setAttribute("alternateCode", alternateCode);
 		String quantity = req.getParameter("quantity");
 		
+		AssemblyBean assembly = new AssemblyBean();
+		assembly.setProjectId(project.getProjectId());
+		assembly.setParentPartId(parentPart.getPartId());
+		assembly.setChildPartId(childPart.getPartId());
+		assembly.setRevision(revision);
+		assembly.setItemNumber(itemNumber);
+		assembly.setReferenceDesignator(referenceDesignator);
+		assembly.setAlternateCodeId(alternateCodeBean.getAlternateCodeId());
+		assembly.setQuantity(quantity);
+		assembly.setAuthorUserId(user.getUserId());
 		
-		
-		
-		req.getRequestDispatcher("/jsp/newAssembly.jsp").forward(req, resp);
-		
-		
-		
-		
-		String partTypeName = req.getParameter("newPartTypeName");
-		PartTypeBean partType = new PartTypeBean();
-		for (PartTypeBean partTypeCnt:partTypes) {
-			if(partTypeCnt.getPartType().equals(partTypeName)){
-				partType = partTypeCnt;
-			}
-		}
-		req.setAttribute("partType", partType);
-		
-		HttpSession session = req.getSession();
-		UserBean user = (UserBean) session.getAttribute("user");
-		ProjectBean project = (ProjectBean) session.getAttribute("project");
-		int authorUserId = user.getUserId();
-		
-
-		// collect all form data
-		String partNumber = req.getParameter("newPartNumber");
-		String drawingNumber = req.getParameter("newDrawingNumber");
-		int partTypeId = partType.getPartTypeId();
-		String partDescription = req.getParameter("newPartDescription");
-		String cageCode = req.getParameter("newCageCode");
-		String manufacturer = req.getParameter("newManufacturer");
-
-	
-	
-		// fill it up in a User bean
-		PartBean part = new PartBean();
-		part.setProjectId(project.getProjectId());
-		part.setPartNumber(partNumber);
-		part.setDrawingNumber(drawingNumber);
-		part.setPartTypeId(partTypeId);
-		part.setPartDescription(partDescription);
-		part.setCageCode(cageCode);
-		part.setManufacturer(manufacturer);
-		part.setAuthorUserId(authorUserId);
 		
 		String infoMessage = null;
-		infoMessage = part.validate();
+		infoMessage = assembly.validate();
 		if(infoMessage == null) {
 		// call DAO layer and save the user object to DB
 
-			int rows = dao.addPart(part, connection);
+			int rows = dao.addAssembly(assembly, connection);
 			
 			// prepare an information message for user about the success or failure of the operation
 			if(rows==0){
@@ -134,15 +105,15 @@ public class NewAssemblyServlet extends HttpServlet {
 			}
 			else{
 				
-				part = dao.getPartBeanFromPartNumber(part.getPartNumber(), connection);
-				infoMessage="New Part Added";
-				req.setAttribute("newPart", part);
+				AssemblyBean newAssembly = dao.getAssemblyBean(assembly, connection);
+				infoMessage="New Assembly Added";
+				req.setAttribute("newAssembly", newAssembly);
 				
 			}
 		}
-		req.setAttribute("part", part);
-		req.setAttribute("newPartMessage", infoMessage);
-		req.getRequestDispatcher("/jsp/newPart.jsp").forward(req, resp);
+		req.setAttribute("assembly", assembly);
+		req.setAttribute("newAssemblyMessage", infoMessage);
+		req.getRequestDispatcher("/jsp/newAssembly.jsp").forward(req, resp);
 				
 	}
 

@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class AssemblyBean {
 	
+	private int assemblyId;
 	private int projectId;
 	private String projectName;
 	private int parentPartId;
@@ -45,6 +46,33 @@ public class AssemblyBean {
 	
 	public AssemblyBean() {
 		
+	}
+	
+	
+public String validate() {
+		
+		String infoMessage = null;
+		
+		if(getParentPartId() == 0) {
+			infoMessage = "Sorry, an error occurred!";
+		}
+		if(getChildPartId() == 0) {
+			infoMessage = "Sorry, an error occurred!";
+		}
+		if(getRevision() == null || getRevision().isBlank()) {
+			infoMessage = "Sorry, an error occurred!";
+		}
+		if(getItemNumber() == null || getItemNumber().isBlank()) {
+			infoMessage = "Sorry, an error occurred!";
+		}
+		if(getAlternateCodeId() == 0) {
+			infoMessage = "Sorry, an error occurred!";
+		}
+		if(getQuantity() == null || getQuantity().isBlank()) {
+			infoMessage = "Sorry, an error occurred!";
+		}
+	
+		return infoMessage;
 	}
 
 	public int getProjectId() {
@@ -165,6 +193,14 @@ public class AssemblyBean {
 
 	public void setAuthorUserName(String authorUserName) {
 		this.authorUserName = authorUserName;
+	}
+
+	public int getAssemblyId() {
+		return assemblyId;
+	}
+
+	public void setAssemblyId(int assemblyId) {
+		this.assemblyId = assemblyId;
 	}
 	
 

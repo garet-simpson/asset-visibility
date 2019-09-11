@@ -20,7 +20,7 @@
 		
 				<h3 class="headline">Create New Assembly</h3>
 					<br/>
-				<form action="newPart" method="post">
+				<form action="newAssembly" method="post">
 					<label>Parent Part Number</label>
 					<select name="parentPartNumber" id="parentPartNumber">
 						<option value = "select">Select Parent Part Number</option>
@@ -47,7 +47,7 @@
 						<option value = "select">Select Alternate Code</option>
 							<c:forEach items="${requestScope.alternateCodes}" var="alternateCode" varStatus="loop">
 								<option value = "${alternateCode.alternateCode}"
-								<c:if test="${requestScope.alternateCode.alternateCode.equals(alternateCode.alternateCode) }" >selected</c:if>
+								<c:if test="${requestScope.alternateCode.equals(alternateCode.alternateCode) }" >selected</c:if>
 								>${alternateCode.alternateCode}</option>
 							</c:forEach>
 					</select><br/><br/>
@@ -80,6 +80,7 @@
 									<td>${requestScope.newAssembly.childPartNumber}</td>
 									<td>${requestScope.newAssembly.revision}</td>
 									<td>${requestScope.newAssembly.itemNumber}</td>
+									<td>${requestScope.newAssembly.referenceDesignator}</td>
 									<td>${requestScope.newAssembly.alternateCode}</td>
 									<td>${requestScope.newAssembly.quantity}</td>
 									<td>${requestScope.newAssembly.timeStamp}</td>
